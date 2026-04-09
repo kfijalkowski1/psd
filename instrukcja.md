@@ -54,8 +54,7 @@ h. $ `sudo systemctl start kafka`
 
 a. $ `sudo systemctl status kafka`
 
-b. `~kafka/kafka/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --
-replication-factor 1 --partitions 1 --topic PSDTopic`
+b. `~kafka/kafka/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic PSDTopic`
 
 c. `echo "Hello, World" | ~kafka/kafka/bin/kafka-console-producer.sh --brokerlist localhost:9092 --topic PSDTopic > /dev/null`
 

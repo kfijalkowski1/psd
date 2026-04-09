@@ -72,7 +72,7 @@ Materiały pomocnicze:
 https://kafka.apache.org/
 https://github.com/obsidiandynamics/kafdrop
 
-###PRODUCENT
+### PRODUCENT
 ```java
 import time
 import json
@@ -118,7 +118,9 @@ def generate_message1() -> dict:
  'user_id': random_user_id,
  'message': message
  }
-KONSUMENT
+```
+### KONSUMENT
+```java
 import json
 from kafka import KafkaConsumer
 if __name__ == '__main__':

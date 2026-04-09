@@ -62,8 +62,7 @@ d. `~kafka/kafka/bin/kafka-console-consumer.sh --bootstrap-server
 localhost:9092 --topic PSDTopic --from-beginning`
 
 5. Uruchom i przeanalizuj wykorzystanie brokera kafki za pomocą kafdrop.
-`java --add-opens=java.base/sun.nio.ch=ALL-UNNAMED -jar kafdrop-3.29.0.jar --
-kafka.brokerConnect=localhost:9092`
+`java --add-opens=java.base/sun.nio.ch=ALL-UNNAMED -jar kafdrop-3.29.0.jar --kafka.brokerConnect=localhost:9092`
 
 7. Napisz przykładowego producenta i konsumenta. Można wzorować się na
 załączonym materiale, ale wskazane są własne rozszerzenia.

@@ -14,7 +14,9 @@ d. $ tar -xvzf ~/Downloads/kafka.tgz --strip 1
 e. $ vi ~/kafka/config/server.properties I dodaj dwie linie na końcu pliku
 delete.topic.enable = true
 log.dirs=/home/kafka/logs
+
 f. Utwórz plik /etc/systemd/system/kafka.service o zawartości:
+```
 [Unit]
 Requires=zookeeper.service
 After=zookeeper.service
@@ -27,7 +29,10 @@ ExecStop=/home/kafka/kafka/bin/kafka-server-stop.sh
 Restart=on-abnormal
 [Install]
 WantedBy=multi-user.target
+```
+
 g. Utwórz plik /etc/systemd/system/zookeeper.service o zawartości:
+```
 [Unit]
 Requires=network.target remote-fs.target
 After=network.target remote-fs.target
@@ -40,24 +45,35 @@ ExecStop=/home/kafka/kafka/bin/zookeeper-server-stop.sh
 Restart=on-abnormal
 [Install]
 WantedBy=multi-user.target
-h. $ sudo systemctl start kafka
-3. Weryfikacja działania kafki
-a. $ sudo systemctl status kafka
-b. ~kafka/kafka/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --
-replication-factor 1 --partitions 1 --topic PSDTopic
-c. echo "Hello, World" | ~kafka/kafka/bin/kafka-console-producer.sh --brokerlist localhost:9092 --topic PSDTopic > /dev/null
-d. ~kafka/kafka/bin/kafka-console-consumer.sh --bootstrap-server
-localhost:9092 --topic PSDTopic --from-beginning
-4. Uruchom i przeanalizuj wykorzystanie brokera kafki za pomocą kafdrop.
-java --add-opens=java.base/sun.nio.ch=ALL-UNNAMED -jar kafdrop-3.29.0.jar --
-kafka.brokerConnect=localhost:9092
-5. Napisz przykładowego producenta i konsumenta. Można wzorować się na
+```
+h. $ `sudo systemctl start kafka`
+
+## 4. Weryfikacja działania kafki
+
+a. $ `sudo systemctl status kafka`
+
+b. `~kafka/kafka/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --
+replication-factor 1 --partitions 1 --topic PSDTopic`
+
+c. `echo "Hello, World" | ~kafka/kafka/bin/kafka-console-producer.sh --brokerlist localhost:9092 --topic PSDTopic > /dev/null`
+
+d. `~kafka/kafka/bin/kafka-console-consumer.sh --bootstrap-server
+localhost:9092 --topic PSDTopic --from-beginning`
+
+5. Uruchom i przeanalizuj wykorzystanie brokera kafki za pomocą kafdrop.
+`java --add-opens=java.base/sun.nio.ch=ALL-UNNAMED -jar kafdrop-3.29.0.jar --
+kafka.brokerConnect=localhost:9092`
+
+7. Napisz przykładowego producenta i konsumenta. Można wzorować się na
 załączonym materiale, ale wskazane są własne rozszerzenia.
-6. Napisz krótkie sprawozdanie (1-2 strony)
+
+9. Napisz krótkie sprawozdanie (1-2 strony)
 Materiały pomocnicze:
 https://kafka.apache.org/
 https://github.com/obsidiandynamics/kafdrop
-PRODUCENT
+
+###PRODUCENT
+```java
 import time
 import json
 import random
@@ -86,7 +102,10 @@ if __name__ == '__main__':
  # Sleep for a random number of seconds
  time_to_sleep = random.randint(1, 11)
  time.sleep(time_to_sleep)
-GENERATOR DANYCH
+```
+
+### GENERATOR DANYCH
+```java
 import random
 import string
 user_ids = list(range(1, 101))
@@ -111,3 +130,4 @@ auto_offset_reset='earliest'
 )
 for message in consumer:
 print(json.loads(message.value))
+```
